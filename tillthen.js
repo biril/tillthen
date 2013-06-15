@@ -186,38 +186,32 @@
                 // Fulfil the promise. Will run the queued fulfillment-handlers and resolve
                 //  dependant promises. Note that the `fulfil` method will be exposed on the
                 //  returned deferred *only* - not on any returned promise: not by the deferred's
-                //  underlying promise or those returned by invoking `then`. Will return the
-                //  fulfilled promise
+                //  underlying promise or those returned by invoking `then`
                 fulfill = function (value) {
 
                     // Dont fulfil the promise unless it's currently in a pending state
-                    if (state !== "pending") { return promise; }
+                    if (state !== "pending") { return; }
 
                     // Fulfil the promise
                     state = "fulfilled";
                     _(onFulfilledQueue).each(function (onFulfilled) { onFulfilled(value); });
                     onFulfilledQueue = [];
                     result = value;
-
-                    return promise;
                 },
 
                 // Reject the promise. Will run the queued rejection-handlers and resolve
                 //  dependant promises. As with the `fulfil` method, the `reject` method will be
-                //  exposed on the returned deferred *only* - not on any returned promise. Will
-                //  return the rejected promise
+                //  exposed on the returned deferred *only* - not on any returned promise
                 reject = function (reason) {
 
                     // Dont reject the promise unless it's currently in a pending state
-                    if (state !== "pending") { return promise; }
+                    if (state !== "pending") { return; }
 
                     // Reject the promise
                     state = "rejected";
                     _(onRejectedQueue).each(function (onRejected) { onRejected(reason); });
                     onRejectedQueue = [];
                     result = reason;
-
-                    return promise;
                 };
 
             // Attach the `then` method to the promise
