@@ -1,0 +1,34 @@
+{
+  "name": "tillthen",
+  "version": "0.1.0",
+  "author": "biril <alexlambiris@gmail.com>",
+  "description": "A minimal implementation of Promises/A+",
+  "contributors": [],
+  "main": "./tillthen.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/biril/tillthen"
+  },
+  "bugs": "https://github.com/biril/tillthen/issues",
+  "license": "MIT",
+  "keywords": [
+    "promises",
+    "Promises/A+"
+  ],
+  "dependencies": {
+    "underscore": "1.4.x"
+  },
+  "devDependencies": {
+    "promises-aplus-tests": "*"
+  },
+  "scripts": {
+    "test": "promises-aplus-tests test/aplus-tests-adapter.js",
+    "lint": "jshint --show-non-errors tillthen.js test/aplus-tests-adapter.js"
+  },
+  "engines": {
+    "node": ">=0.8"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
