@@ -186,11 +186,12 @@
                 // Fulfil the promise. Will run the queued fulfillment-handlers and resolve
                 //  dependant promises. Note that the `fulfil` method will be exposed on the
                 //  returned deferred *only* - not on any returned promise: not by the deferred's
-                //  underlying promise or those returned by invoking `then`.
+                //  underlying promise or those returned by invoking `then`. Will return the
+                //  fulfilled promise
                 fulfill = function (value) {
 
                     // Dont fulfil the promise unless it's currently in a pending state
-                    if (state !== "pending") { return; }
+                    if (state !== "pending") { return promise; }
 
                     // Fulfil the promise
                     state = "fulfilled";
@@ -203,11 +204,12 @@
 
                 // Reject the promise. Will run the queued rejection-handlers and resolve
                 //  dependant promises. As with the `fulfil` method, the `reject` method will be
-                //  exposed on the returned deferred *only* - not on any returned promise
+                //  exposed on the returned deferred *only* - not on any returned promise. Will
+                //  return the rejected promise
                 reject = function (reason) {
 
                     // Dont reject the promise unless it's currently in a pending state
-                    if (state !== "pending") { return; }
+                    if (state !== "pending") { return promise; }
 
                     // Reject the promise
                     state = "rejected";
