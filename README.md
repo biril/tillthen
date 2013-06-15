@@ -6,8 +6,11 @@ Tillthen v0.1.1
 A minimal implementation of [Promises/A+](https://github.com/promises-aplus/promises-spec) tested against the
 [Promises/A+ Compliance Test Suite](https://github.com/promises-aplus/promises-tests). 
 
-May be used in the browser (with or without an AMD module framework) or Node. Useful as a consise, easy-to-digest 
-example but authors of real-world applications should go with [a richer implementation](https://github.com/kriskowal/q).
+May be used in the browser (with or without an AMD module framework) or Node. Although authors of real-world
+applications should go with [a richer library](https://github.com/kriskowal/q), Tillthen is useful as a consise,
+easy-to-digest implementation of the spec. The source (excluding the UMD boilerplate which deals with exporting
+the module) is in the 100-line ballpark. An [annotated version](http://biril.github.io/tillthen/) is also
+maintained.
 
 
 Set up
@@ -53,8 +56,8 @@ exposed as a Global, a CommonJS module or an AMD module depending on the detecte
 Usage
 -----
 
-Tillthen features a single method `defer` which may be used to create a deferred object, i.e. a pending promise with
-`resolve`, `fulfil` and `reject` methods. For example
+Besides the self-explanatory `getVersion`, Tillthen features a single method `defer` which may be used to create a
+deferred object, i.e. a pending promise with `resolve`, `fulfil` and `reject` methods. For example
 
 ```javascript
 var deferred = tillthen.defer();
