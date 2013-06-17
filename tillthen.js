@@ -48,7 +48,7 @@
         break;
 
     case "AMD":
-        define(["underscore", "exports"], function (_, exports) {
+        define(["exports"], function (exports) {
             return createModule(evaluateOnNextTurn, exports);
         });
         break;
