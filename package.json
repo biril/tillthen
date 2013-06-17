@@ -15,9 +15,7 @@
     "promises",
     "Promises/A+"
   ],
-  "dependencies": {
-    "underscore": "1.4.x"
-  },
+  "dependencies": {},
   "devDependencies": {
     "promises-aplus-tests": "*"
   },

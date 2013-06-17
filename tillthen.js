@@ -4,7 +4,7 @@
 //     Licensed and freely distributed under the MIT License
 //     Copyright (c) 2013 Alex Lambiris
 
-/*global exports, define, require, process, _ */
+/*global exports, define, process */
 (function (root, createModule) {
     "use strict";
 
@@ -14,11 +14,15 @@
         env = (function () {
             // A global `exports` object signifies CommonJS-like enviroments that support
             //  `module.exports`, e.g. Node
-            if (typeof exports === "object") { return "CommonJS"; }
+            if (Object.prototype.toString.call(exports) === "[object Object]") {
+                return "CommonJS";
+            }
 
             // A global `define` method with an `amd` property signifies the presence of an AMD
             //  loader (require.js, curl.js)
-            if (typeof define === "function" && define.amd) { return "AMD"; }
+            if (Object.prototype.toString.call(define) === "[object Function]" && define.amd) {
+                return "AMD";
+            }
 
             // If none of the above, then assume a browser, without AMD
             return "browser";
@@ -40,21 +44,21 @@
     // Expose as a module or global depending on the detected environment
     switch (env) {
     case "CommonJS":
-        createModule(evaluateOnNextTurn, exports, require("underscore"));
+        createModule(evaluateOnNextTurn, exports);
         break;
 
     case "AMD":
         define(["underscore", "exports"], function (_, exports) {
-            return createModule(evaluateOnNextTurn, exports, _);
+            return createModule(evaluateOnNextTurn, exports);
         });
         break;
 
     case "browser":
-        root.tillthen = createModule(evaluateOnNextTurn, {}, _);
+        root.tillthen = createModule(evaluateOnNextTurn, {});
 
         // When running in a browser (without AMD modules), attach a `noConflict` onto the
         //  `tillthen` global
-        root.tillthen.noConflict = (function() {
+        root.tillthen.noConflict = (function () {
 
             // Save a reference to the previous value of 'tillthen', so that it can be restored
             //  later on, if 'noConflict' is used
@@ -70,10 +74,23 @@
             };
         }());
     }
-}(this, function (evaluateOnNextTurn, tillthen, _) {
+}(this, function (evaluateOnNextTurn, tillthen) {
     "use strict";
 
     var
+        isObject = function (o) {
+            return Object.prototype.toString.call(o) === "[object Object]";
+        },
+
+        isFunction = function (f) {
+            return Object.prototype.toString.call(f) === "[object Function]";
+        },
+
+        extend = function (target, source) {
+            for (var x in source) { if (source.hasOwnProperty(x)) { target[x] = source[x]; } }
+            return target;
+        },
+
         // Tillthen deferred constructor
         TillthenDeferred = function () {},
 
@@ -103,7 +120,7 @@
             //  ensuring consistency in the face of an accessor property, whose value could change
             //  between retrievals)
             try {
-                if ((!_.isObject(x) && !_.isFunction(x)) || !_.isFunction(xThen = x.then)) {
+                if (!(isObject(x) || isFunction(x)) || !isFunction(xThen = x.then)) {
                     return deferred.fulfill(x);
                 }
             }
@@ -137,10 +154,10 @@
                 //  rejection actually occurs
                 result,
 
-                // Queues of fullfilment / rejection handlers. Handlers are added to these queues
-                //  everytime the promise's `then` method is invoked
-                onFulfilledQueue = [],
-                onRejectedQueue = [],
+                // Queues of fulfillment / rejection handlers. Handlers are added whenever the
+                //  promise's `then` method is invoked
+                fulfilQueue = [],
+                rejectQueue = [],
 
                 // The actual promise. The deferred will derive from this
                 promise = new TillthenPromise(),
@@ -155,13 +172,13 @@
 
                     // If given `onFulfilled` is not a function then use a pass-through function in
                     //  its place
-                    _.isFunction(onFulfilled) || (onFulfilled = function (value) { return value; });
+                    isFunction(onFulfilled) || (onFulfilled = function (value) { return value; });
 
                     // Create an evaluator to do the dirty work and either run it 'now' if the
                     //  promise is already fulfilled or as soon as (and if) that eventually happens
                     var evaluator = createEvaluator(onFulfilled, dependantDeferred);
                     state === "fulfilled" ? evaluateOnNextTurn(evaluator, result) :
-                        onFulfilledQueue.push(evaluator);
+                        fulfilQueue.push(evaluator);
                 },
 
                 // Queue a handler and a dependant deferred for rejection. When (and if) the promise
@@ -174,13 +191,13 @@
 
                     // If given `onRejected` is not a function then use a pass-through function in
                     //  its place
-                    _.isFunction(onRejected) || (onRejected = function (error) { throw error; });
+                    isFunction(onRejected) || (onRejected = function (error) { throw error; });
 
                     // Create an evaluator to do the dirty work and either run it 'now' if the
                     //  promise is already rejected or as soon as (and if) that eventually happens
                     var evaluator = createEvaluator(onRejected, dependantDeferred);
                     state === "rejected" ? evaluateOnNextTurn(evaluator, result) :
-                        onRejectedQueue.push(evaluator);
+                        rejectQueue.push(evaluator);
                 },
 
                 // Fulfil the promise. Will run the queued fulfillment-handlers and resolve
@@ -194,8 +211,8 @@
 
                     // Fulfil the promise
                     state = "fulfilled";
-                    _(onFulfilledQueue).each(function (onFulfilled) { onFulfilled(value); });
-                    onFulfilledQueue = [];
+                    for (var i = 0, l = fulfilQueue.length; i < l; ++i) { fulfilQueue[i](value); }
+                    fulfilQueue = [];
                     result = value;
                 },
 
@@ -209,40 +226,38 @@
 
                     // Reject the promise
                     state = "rejected";
-                    _(onRejectedQueue).each(function (onRejected) { onRejected(reason); });
-                    onRejectedQueue = [];
+                    for (var i = 0, l = rejectQueue.length; i < l; ++i) { rejectQueue[i](reason); }
+                    rejectQueue = [];
                     result = reason;
                 };
 
-            // Attach the `then` method to the promise
-            _(promise).extend({
+            // Attach the `then` method to the promise:
+            //
+            // Access the promise's current or eventual fulfillment value or rejection reason.
+            //  As soon as (if ever) the promise is fulfilled, the `onFulfilled` handler will
+            //  be evaluated on the promise's fulfillment value. Similarly, as soon as (if ever)
+            //  the promise is rejected, the `onRejected` handler will be evaluated on the
+            //  rejection reason. Returns a new promise which will be eventually resolved
+            //  with the value / reason / promise returned by `onFulfilled` or `onRejected`
+            promise.then = function (onFulfilled, onRejected) {
 
-                // Access the promise's current or eventual fulfillment value or rejection reason.
-                //  As soon as (if ever) the promise is fulfilled, the `onFulfilled` handler will
-                //  be evaluated on the promise's fulfillment value. Similarly, as soon as (if ever)
-                //  the promise is rejected, the `onRejected` handler will be evaluated on the
-                //  rejection reason. Returns a new promise which will be eventually resolved
-                //  with the value / reason / promise returned by `onFulfilled` or `onRejected`
-                then: function (onFulfilled, onRejected) {
+                // Create a new deferred, one which is *dependant* on (and will be resolved
+                //  with) the the value / reason / promise returned by `onFulfilled` or
+                //  `onRejected`
+                var dependantDeferred = createDeferred();
 
-                    // Create a new deferred, one which is *dependant* on (and will be resolved
-                    //  with) the the value / reason / promise returned by `onFulfilled` or
-                    //  `onRejected`
-                    var dependantDeferred = createDeferred();
+                // Queue `onFulfilled` and `onRejected` for evaluation upon the promise's
+                //  eventual fulfillment or rejection
+                queueForFulfillment(onFulfilled, dependantDeferred);
+                queueForRejection(onRejected, dependantDeferred);
 
-                    // Queue `onFulfilled` and `onRejected` for evaluation upon the promise's
-                    //  eventual fulfillment or rejection
-                    queueForFulfillment(onFulfilled, dependantDeferred);
-                    queueForRejection(onRejected, dependantDeferred);
-
-                    // Return the dependant deferred's underlying promise
-                    return dependantDeferred.promise;
-                }
-            });
+                // Return the dependant deferred's underlying promise
+                return dependantDeferred.promise;
+            };
 
             // Derive a deferred from the promise and return it
             TillthenDeferred.prototype = promise;
-            return _(new TillthenDeferred()).extend({
+            return extend(new TillthenDeferred(), {
                 promise: promise,
                 fulfill: fulfill,
                 reject: reject,
@@ -251,7 +266,7 @@
         };
 
     // Attach the `defer` / `getVersion` methods to Tillthen and return it
-    return _(tillthen).extend({
+    return extend(tillthen, {
 
         // Get a deferred object: A pending promise with `resolve`, `fulfil` and `reject` methods
         defer: createDeferred,

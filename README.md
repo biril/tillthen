@@ -25,7 +25,6 @@ on the detected environment. To get it, `git clone git://github.com/biril/tillth
 
     ```html
     ...
-    <script type="text/javascript" src="underscore.js"></script>
     <script type="text/javascript" src="tillthen.js"></script>
     ...
     ```
@@ -51,9 +50,6 @@ on the detected environment. To get it, `git clone git://github.com/biril/tillth
     	console.log("working with version " + tillthen.getVersion());
     });
     ```
-
-    (you'll probably be using the AMD-compliant version of
-    [Underscore](https://github.com/amdjs/underscore))
 
 
 Usage
