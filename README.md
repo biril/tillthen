@@ -1,4 +1,4 @@
-Tillthen v0.1.3
+Tillthen v0.2.0
 ===============
 
 [![Build Status](https://travis-ci.org/biril/tillthen.png)](https://travis-ci.org/biril/tillthen)
