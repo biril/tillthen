@@ -27,7 +27,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <pre><code>Tillthen v0.1.2
+              <pre><code>Tillthen v0.2.0
 
 https://github.com/biril/tillthen
 Licensed and freely distributed under the MIT License
@@ -35,7 +35,7 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="comment">/*global exports, define, require, process, _ */</span>
+            <div class="content"><div class='highlight'><pre><span class="comment">/*global exports, define, process */</span>
 (<span class="function"><span class="keyword">function</span> <span class="params">(root, createModule)</span> {</span>
     <span class="string">"use strict"</span>;
 
@@ -71,7 +71,9 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> exports === <span class="string">"object"</span>) { <span class="keyword">return</span> <span class="string">"CommonJS"</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Object.prototype.toString.call(exports) === <span class="string">"[object Object]"</span>) {
+                <span class="keyword">return</span> <span class="string">"CommonJS"</span>;
+            }</pre></div></div>
             
         </li>
         
@@ -87,7 +89,9 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">"function"</span> &amp;&amp; define.amd) { <span class="keyword">return</span> <span class="string">"AMD"</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Object.prototype.toString.call(define) === <span class="string">"[object Function]"</span> &amp;&amp; define.amd) {
+                <span class="keyword">return</span> <span class="string">"AMD"</span>;
+            }</pre></div></div>
             
         </li>
         
@@ -144,17 +148,17 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
             
             <div class="content"><div class='highlight'><pre>    <span class="keyword">switch</span> (env) {
     <span class="keyword">case</span> <span class="string">"CommonJS"</span>:
-        createModule(evaluateOnNextTurn, exports, require(<span class="string">"underscore"</span>));
+        createModule(evaluateOnNextTurn, exports);
         <span class="keyword">break</span>;
 
     <span class="keyword">case</span> <span class="string">"AMD"</span>:
         define([<span class="string">"underscore"</span>, <span class="string">"exports"</span>], <span class="function"><span class="keyword">function</span> <span class="params">(_, exports)</span> {</span>
-            <span class="keyword">return</span> createModule(evaluateOnNextTurn, exports, _);
+            <span class="keyword">return</span> createModule(evaluateOnNextTurn, exports);
         });
         <span class="keyword">break</span>;
 
     <span class="keyword">case</span> <span class="string">"browser"</span>:
-        root.tillthen = createModule(evaluateOnNextTurn, {}, _);</pre></div></div>
+        root.tillthen = createModule(evaluateOnNextTurn, {});</pre></div></div>
             
         </li>
         
@@ -170,7 +174,7 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        root.tillthen.noConflict = (<span class="keyword">function</span>() {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        root.tillthen.noConflict = (<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -210,10 +214,22 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
             };
         }());
     }
-}(<span class="keyword">this</span>, <span class="function"><span class="keyword">function</span> <span class="params">(evaluateOnNextTurn, tillthen, _)</span> {</span>
+}(<span class="keyword">this</span>, <span class="function"><span class="keyword">function</span> <span class="params">(evaluateOnNextTurn, tillthen)</span> {</span>
     <span class="string">"use strict"</span>;
 
-    <span class="keyword">var</span></pre></div></div>
+    <span class="keyword">var</span>
+        isObject = <span class="function"><span class="keyword">function</span> <span class="params">(o)</span> {</span>
+            <span class="keyword">return</span> Object.prototype.toString.call(o) === <span class="string">"[object Object]"</span>;
+        },
+
+        isFunction = <span class="function"><span class="keyword">function</span> <span class="params">(f)</span> {</span>
+            <span class="keyword">return</span> Object.prototype.toString.call(f) === <span class="string">"[object Function]"</span>;
+        },
+
+        extend = <span class="function"><span class="keyword">function</span> <span class="params">(target, source)</span> {</span>
+            <span class="keyword">for</span> (<span class="keyword">var</span> x <span class="keyword">in</span> source) { <span class="keyword">if</span> (source.hasOwnProperty(x)) { target[x] = source[x]; } }
+            <span class="keyword">return</span> target;
+        },</pre></div></div>
             
         </li>
         
@@ -315,7 +331,7 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>            <span class="keyword">try</span> {
-                <span class="keyword">if</span> ((!_.isObject(x) &amp;&amp; !_.isFunction(x)) || !_.isFunction(xThen = x.then)) {
+                <span class="keyword">if</span> (!(isObject(x) || isFunction(x)) || !isFunction(xThen = x.then)) {
                     <span class="keyword">return</span> deferred.fulfill(x);
                 }
             }
@@ -419,13 +435,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
-              <p>Queues of fullfilment / rejection handlers. Handlers are added to these queues
- everytime the promise&#39;s <code>then</code> method is invoked</p>
+              <p>Queues of fulfillment / rejection handlers. Handlers are added whenever the
+ promise&#39;s <code>then</code> method is invoked</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                onFulfilledQueue = [],
-                onRejectedQueue = [],</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                fulfilQueue = [],
+                rejectQueue = [],</pre></div></div>
             
         </li>
         
@@ -488,7 +504,7 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    _.isFunction(onFulfilled) || (onFulfilled = <span class="function"><span class="keyword">function</span> <span class="params">(value)</span> {</span> <span class="keyword">return</span> value; });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    isFunction(onFulfilled) || (onFulfilled = <span class="function"><span class="keyword">function</span> <span class="params">(value)</span> {</span> <span class="keyword">return</span> value; });</pre></div></div>
             
         </li>
         
@@ -506,7 +522,7 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
             
             <div class="content"><div class='highlight'><pre>                    <span class="keyword">var</span> evaluator = createEvaluator(onFulfilled, dependantDeferred);
                     state === <span class="string">"fulfilled"</span> ? evaluateOnNextTurn(evaluator, result) :
-                        onFulfilledQueue.push(evaluator);
+                        fulfilQueue.push(evaluator);
                 },</pre></div></div>
             
         </li>
@@ -555,7 +571,7 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    _.isFunction(onRejected) || (onRejected = <span class="function"><span class="keyword">function</span> <span class="params">(error)</span> {</span> <span class="keyword">throw</span> error; });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    isFunction(onRejected) || (onRejected = <span class="function"><span class="keyword">function</span> <span class="params">(error)</span> {</span> <span class="keyword">throw</span> error; });</pre></div></div>
             
         </li>
         
@@ -573,7 +589,7 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
             
             <div class="content"><div class='highlight'><pre>                    <span class="keyword">var</span> evaluator = createEvaluator(onRejected, dependantDeferred);
                     state === <span class="string">"rejected"</span> ? evaluateOnNextTurn(evaluator, result) :
-                        onRejectedQueue.push(evaluator);
+                        rejectQueue.push(evaluator);
                 },</pre></div></div>
             
         </li>
@@ -623,8 +639,8 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>                    state = <span class="string">"fulfilled"</span>;
-                    _(onFulfilledQueue).each(<span class="function"><span class="keyword">function</span> <span class="params">(onFulfilled)</span> {</span> onFulfilled(value); });
-                    onFulfilledQueue = [];
+                    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = fulfilQueue.length; i &lt; l; ++i) { fulfilQueue[i](value); }
+                    fulfilQueue = [];
                     result = value;
                 },</pre></div></div>
             
@@ -674,8 +690,8 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>                    state = <span class="string">"rejected"</span>;
-                    _(onRejectedQueue).each(<span class="function"><span class="keyword">function</span> <span class="params">(onRejected)</span> {</span> onRejected(reason); });
-                    onRejectedQueue = [];
+                    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = rejectQueue.length; i &lt; l; ++i) { rejectQueue[i](reason); }
+                    rejectQueue = [];
                     result = reason;
                 };</pre></div></div>
             
@@ -688,11 +704,17 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
-              <p>Attach the <code>then</code> method to the promise</p>
+              <p>Attach the <code>then</code> method to the promise:</p>
+<p>Access the promise&#39;s current or eventual fulfillment value or rejection reason.
+ As soon as (if ever) the promise is fulfilled, the <code>onFulfilled</code> handler will
+ be evaluated on the promise&#39;s fulfillment value. Similarly, as soon as (if ever)
+ the promise is rejected, the <code>onRejected</code> handler will be evaluated on the
+ rejection reason. Returns a new promise which will be eventually resolved
+ with the value / reason / promise returned by <code>onFulfilled</code> or <code>onRejected</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            _(promise).extend({</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            promise.then = <span class="function"><span class="keyword">function</span> <span class="params">(onFulfilled, onRejected)</span> {</span></pre></div></div>
             
         </li>
         
@@ -703,16 +725,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
-              <p>Access the promise&#39;s current or eventual fulfillment value or rejection reason.
- As soon as (if ever) the promise is fulfilled, the <code>onFulfilled</code> handler will
- be evaluated on the promise&#39;s fulfillment value. Similarly, as soon as (if ever)
- the promise is rejected, the <code>onRejected</code> handler will be evaluated on the
- rejection reason. Returns a new promise which will be eventually resolved
- with the value / reason / promise returned by <code>onFulfilled</code> or <code>onRejected</code></p>
+              <p>Create a new deferred, one which is <em>dependant</em> on (and will be resolved
+ with) the the value / reason / promise returned by <code>onFulfilled</code> or
+ <code>onRejected</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                then: <span class="function"><span class="keyword">function</span> <span class="params">(onFulfilled, onRejected)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>                <span class="keyword">var</span> dependantDeferred = createDeferred();</pre></div></div>
             
         </li>
         
@@ -723,13 +742,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
-              <p>Create a new deferred, one which is <em>dependant</em> on (and will be resolved
- with) the the value / reason / promise returned by <code>onFulfilled</code> or
- <code>onRejected</code></p>
+              <p>Queue <code>onFulfilled</code> and <code>onRejected</code> for evaluation upon the promise&#39;s
+ eventual fulfillment or rejection</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="keyword">var</span> dependantDeferred = createDeferred();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                queueForFulfillment(onFulfilled, dependantDeferred);
+                queueForRejection(onRejected, dependantDeferred);</pre></div></div>
             
         </li>
         
@@ -740,13 +759,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
-              <p>Queue <code>onFulfilled</code> and <code>onRejected</code> for evaluation upon the promise&#39;s
- eventual fulfillment or rejection</p>
+              <p>Return the dependant deferred&#39;s underlying promise</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    queueForFulfillment(onFulfilled, dependantDeferred);
-                    queueForRejection(onRejected, dependantDeferred);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                <span class="keyword">return</span> dependantDeferred.promise;
+            };</pre></div></div>
             
         </li>
         
@@ -757,29 +775,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
-              <p>Return the dependant deferred&#39;s underlying promise</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    <span class="keyword">return</span> dependantDeferred.promise;
-                }
-            });</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-43">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
-              </div>
               <p>Derive a deferred from the promise and return it</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>            TillthenDeferred.prototype = promise;
-            <span class="keyword">return</span> _(<span class="keyword">new</span> TillthenDeferred()).extend({
+            <span class="keyword">return</span> extend(<span class="keyword">new</span> TillthenDeferred(), {
                 promise: promise,
                 fulfill: fulfill,
                 reject: reject,
@@ -790,26 +791,26 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
         </li>
         
         
-        <li id="section-44">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Attach the <code>defer</code> / <code>getVersion</code> methods to Tillthen and return it</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">return</span> _(tillthen).extend({</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">return</span> extend(tillthen, {</pre></div></div>
             
         </li>
         
         
-        <li id="section-45">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Get a deferred object: A pending promise with <code>resolve</code>, <code>fulfil</code> and <code>reject</code> methods</p>
 
@@ -820,18 +821,18 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
         </li>
         
         
-        <li id="section-46">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Get current version of Tillthen</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>        getVersion: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-            <span class="keyword">return</span> <span class="string">"0.1.2"</span>; <span class="comment">// Keep in sync with package.json</span>
+            <span class="keyword">return</span> <span class="string">"0.2.0"</span>; <span class="comment">// Keep in sync with package.json</span>
         }
     });
 }));</pre></div></div>
