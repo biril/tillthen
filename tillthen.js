@@ -144,7 +144,8 @@
             };
         },
 
-        // Create a deferred object: A pending promise with `resolve`, `fulfil` and `reject` methods
+        // Create a deferred object: A pending promise with `resolve`, `fulfill` and `reject`
+        //  methods
         createDeferred = function () {
             var
                 // Promise's current state
@@ -156,7 +157,7 @@
 
                 // Queues of fulfillment / rejection handlers. Handlers are added whenever the
                 //  promise's `then` method is invoked
-                fulfilQueue = [],
+                fulfillQueue = [],
                 rejectQueue = [],
 
                 // The actual promise. The deferred will derive from this
@@ -178,7 +179,7 @@
                     //  promise is already fulfilled or as soon as (and if) that eventually happens
                     var evaluator = createEvaluator(onFulfilled, dependantDeferred);
                     state === "fulfilled" ? evaluateOnNextTurn(evaluator, result) :
-                        fulfilQueue.push(evaluator);
+                        fulfillQueue.push(evaluator);
                 },
 
                 // Queue a handler and a dependant deferred for rejection. When (and if) the promise
@@ -201,23 +202,23 @@
                 },
 
                 // Fulfil the promise. Will run the queued fulfillment-handlers and resolve
-                //  dependant promises. Note that the `fulfil` method will be exposed on the
+                //  dependant promises. Note that the `fulfill` method will be exposed on the
                 //  returned deferred *only* - not on any returned promise: not by the deferred's
                 //  underlying promise or those returned by invoking `then`
                 fulfill = function (value) {
 
-                    // Dont fulfil the promise unless it's currently in a pending state
+                    // Dont fulfill the promise unless it's currently in a pending state
                     if (state !== "pending") { return; }
 
                     // Fulfil the promise
                     state = "fulfilled";
-                    for (var i = 0, l = fulfilQueue.length; i < l; ++i) { fulfilQueue[i](value); }
-                    fulfilQueue = [];
+                    for (var i = 0, l = fulfillQueue.length; i < l; ++i) { fulfillQueue[i](value); }
+                    fulfillQueue = [];
                     result = value;
                 },
 
                 // Reject the promise. Will run the queued rejection-handlers and resolve
-                //  dependant promises. As with the `fulfil` method, the `reject` method will be
+                //  dependant promises. As with the `fulfill` method, the `reject` method will be
                 //  exposed on the returned deferred *only* - not on any returned promise
                 reject = function (reason) {
 
@@ -268,7 +269,7 @@
     // Attach the `defer` / `getVersion` methods to Tillthen and return it
     return extend(tillthen, {
 
-        // Get a deferred object: A pending promise with `resolve`, `fulfil` and `reject` methods
+        // Get a deferred object: A pending promise with `resolve`, `fulfill` and `reject` methods
         defer: createDeferred,
 
         // Get current version of Tillthen

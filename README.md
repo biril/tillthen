@@ -75,7 +75,7 @@ return deferred.promise;
 [promise](https://github.com/promises-aplus/promises-spec) which features nothing more than a
 `then` method.
 
-`defer.resolve(result)` will resolve the promise with given `result`. Thus, it will fulfil the
+`defer.resolve(result)` will resolve the promise with given `result`. Thus, it will fulfill the
 promise if `result` is a _value_, or cause it to assume `result`'s (future) state if it's a
 _promise_ itself. `defer.reject(reason)` will reject the promise with given `reason`. 
 
