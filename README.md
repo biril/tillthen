@@ -16,12 +16,12 @@ real-world use is not within the authors original intentions as
 Set up
 ------
 
-Tillthen may be used in the browser through a plain `<script>`-tag, with an AMD module loader,
-or as a CommonJS module on Node. It will be automatically exported in the correct format depending
-on the detected environment. To get it, `git clone git://github.com/biril/tillthen` or
+Tillthen may be used as a CommonJS module on Node or in a browser, either through a plain `<script>`
+tag or as an AMD module. It will be automatically exported in the correct format depending on the
+detected environment. To get it, `git clone git://github.com/biril/tillthen` or
 `npm install tillthen`.
 
-* When working in a *browser environment, without an AMD module loader*, include tillthen.js:
+* When working in a *browser, without an AMD module loader*, include tillthen.js:
 
     ```html
     ...
@@ -32,14 +32,14 @@ on the detected environment. To get it, `git clone git://github.com/biril/tillth
     and the module will be exposed as the global `tillthen`:
 
     ```javascript
-    console.log("working with version " + tillthen.getVersion());
+    console.log("working with version " + tillthen.version);
     ```
 
 * `require` when working *with CommonJS* (e.g. Node). Assuming Tillthen is `npm install`ed:
 
     ```javascript
     var tillthen = require("tillthen");
-    console.log("working with version " + tillthen.getVersion());
+    console.log("working with version " + tillthen.version);
     ```
 
 * Or list as a dependency when working *with an AMD loader* (e.g. require.js):
@@ -47,7 +47,7 @@ on the detected environment. To get it, `git clone git://github.com/biril/tillth
     ```javascript
     // Your module
     define(["tillthen"], function (tillthen) {
-    	console.log("working with version " + tillthen.getVersion());
+    	console.log("working with version " + tillthen.version);
     });
     ```
 
@@ -55,9 +55,9 @@ on the detected environment. To get it, `git clone git://github.com/biril/tillth
 Usage
 -----
 
-Besides the self-explanatory `getVersion`, Tillthen features a single method `defer` which may be
-used to create a deferred object, i.e. a pending promise featuring `resolve` and `reject` methods.
-As an example:
+Besides the self-explanatory `version` property, Tillthen features a single method `defer` which
+may be used to create a deferred object, i.e. a pending promise featuring `resolve` and `reject`
+methods. As an example:
 
 ```javascript
 var deferred = tillthen.defer();
@@ -90,6 +90,13 @@ Testing
 Tillthen is tested on
 [Promises/A+ Compliance Test Suite](https://github.com/promises-aplus/promises-tests). To run it,
 either `make test` or `npm test` (after `npm install`ing).
+
+
+Caveats / WTF
+-------------
+
+* Uses ES5 syntax, namely `Object.defineProperties`, to expose immutable properties and will
+    therefore break on [non-compliant browsers](http://kangax.github.io/es5-compat-table/).
 
 
 License
