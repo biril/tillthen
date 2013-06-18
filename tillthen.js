@@ -109,6 +109,8 @@
 
             // If `x` is a promise, adopt its (future) state
             if (x instanceof TillthenPromise) {
+                if (x.getState() === "fulfilled") { return deferred.fulfill(x.getResult()); }
+                if (x.getState() === "rejected") { return deferred.reject(x.getResult()); }
                 return x.then(deferred.fulfill, deferred.reject);
             }
 
@@ -164,7 +166,7 @@
                 promise = new TillthenPromise(),
 
                 // Queue a handler and a dependant deferred for fulfillment. When (and if) the
-                //  promise is fullfiled, the handler will be evaluated on promise's value and the
+                //  promise is fulfilled, the handler will be evaluated on promise's value and the
                 //  result will be used to resolve the dependant deferred
                 queueForFulfillment = function (onFulfilled, dependantDeferred) {
 
@@ -215,6 +217,8 @@
                     for (var i = 0, l = fulfillQueue.length; i < l; ++i) { fulfillQueue[i](value); }
                     fulfillQueue = [];
                     result = value;
+
+                    return promise;
                 },
 
                 // Reject the promise. Will run the queued rejection-handlers and resolve
@@ -230,31 +234,42 @@
                     for (var i = 0, l = rejectQueue.length; i < l; ++i) { rejectQueue[i](reason); }
                     rejectQueue = [];
                     result = reason;
+
+                    return promise;
                 };
 
-            // Attach the `then` method to the promise:
-            //
-            // Access the promise's current or eventual fulfillment value or rejection reason.
-            //  As soon as (if ever) the promise is fulfilled, the `onFulfilled` handler will
-            //  be evaluated on the promise's fulfillment value. Similarly, as soon as (if ever)
-            //  the promise is rejected, the `onRejected` handler will be evaluated on the
-            //  rejection reason. Returns a new promise which will be eventually resolved
-            //  with the value / reason / promise returned by `onFulfilled` or `onRejected`
-            promise.then = function (onFulfilled, onRejected) {
+            // Attach `then`, `getState` and `getResult` methods to the promise:
+            extend(promise, {
 
-                // Create a new deferred, one which is *dependant* on (and will be resolved
-                //  with) the the value / reason / promise returned by `onFulfilled` or
-                //  `onRejected`
-                var dependantDeferred = createDeferred();
+                // Access the promise's current or eventual fulfillment value or rejection reason.
+                //  As soon as (if ever) the promise is fulfilled, the `onFulfilled` handler will
+                //  be evaluated on the promise's fulfillment value. Similarly, as soon as (if ever)
+                //  the promise is rejected, the `onRejected` handler will be evaluated on the
+                //  rejection reason. Returns a new promise which will be eventually resolved
+                //  with the value / reason / promise returned by `onFulfilled` or `onRejected`
+                then: function (onFulfilled, onRejected) {
 
-                // Queue `onFulfilled` and `onRejected` for evaluation upon the promise's
-                //  eventual fulfillment or rejection
-                queueForFulfillment(onFulfilled, dependantDeferred);
-                queueForRejection(onRejected, dependantDeferred);
+                    // Create a new deferred, one which is *dependant* on (and will be resolved
+                    //  with) the the value / reason / promise returned by `onFulfilled` or
+                    //  `onRejected`
+                    var dependantDeferred = createDeferred();
 
-                // Return the dependant deferred's underlying promise
-                return dependantDeferred.promise;
-            };
+                    // Queue `onFulfilled` and `onRejected` for evaluation upon the promise's
+                    //  eventual fulfillment or rejection
+                    queueForFulfillment(onFulfilled, dependantDeferred);
+                    queueForRejection(onRejected, dependantDeferred);
+
+                    // Return the dependant deferred's underlying promise
+                    return dependantDeferred.promise;
+                },
+
+                // Get the promise's current state ('pending', 'fulfilled' or 'rejected')
+                getState: function () { return state; },
+
+                // Get the promise's result (value or reason). Valid on after the promise has been
+                //  either fulfilled or rejected
+                getResult: function () { return result; }
+            });
 
             // Derive a deferred from the promise and return it
             TillthenDeferred.prototype = promise;
