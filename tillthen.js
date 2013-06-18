@@ -9,52 +9,62 @@
     "use strict";
 
     var
+        // Package various utility functions we'll be reusing
+        _ = {
+            isObject: function (o) {
+                return Object.prototype.toString.call(o) === "[object Object]";
+            },
+
+            isFunction: function (f) {
+                return Object.prototype.toString.call(f) === "[object Function]";
+            },
+
+            extend: function (target, source) {
+                for (var x in source) { if (source.hasOwnProperty(x)) { target[x] = source[x]; } }
+                return target;
+            }
+        },
+
         // Detect the current environment (can be CommonJS, AMD or browser). Tillthen will be
         //  exposed as a module or global depending on that
         env = (function () {
             // A global `exports` object signifies CommonJS-like enviroments that support
             //  `module.exports`, e.g. Node
-            if (Object.prototype.toString.call(exports) === "[object Object]") {
-                return "CommonJS";
-            }
+            if (_.isObject(exports)) { return "CommonJS"; }
 
             // A global `define` method with an `amd` property signifies the presence of an AMD
             //  loader (require.js, curl.js)
-            if (Object.prototype.toString.call(define) === "[object Function]" && define.amd) {
-                return "AMD";
-            }
+            if (_.isObject(define) && define.amd) { return "AMD"; }
 
             // If none of the above, then assume a browser, without AMD
             return "browser";
-        }()),
-
-        // Create a next-turn-evaluation function: A function that evaluates given function `f` on
-        //  given value `v`, *soon*, i.e. *not* in the same turn of the event loop
-        //
-        // (Note that support for CommonJS will be specific to node. So if the detected environment
-        //  is in fact 'CommonJS', the presense of node's `process` object is assumed and the latter
-        //  is used to get a reference to Node's `nextTick` method)
-        evaluateOnNextTurn = (function () {
-            return env === "CommonJS" ? function (f, v) {
-                    process.nextTick(function () { f(v); });
-                } :
-                function (f, v) { root.setTimeout(function () { f(v); }, 0); };
         }());
+
+    // Create a next-turn-evaluation function: A function that evaluates given function `f` on
+    //  given value `v`, *soon*, i.e. *not* in the same turn of the event loop
+    //
+    // (Note that support for CommonJS will be specific to node. So if the detected environment
+    //  is in fact 'CommonJS', the presense of node's `process` object is assumed and the latter
+    //  is used to get a reference to Node's `nextTick` method)
+    _.evaluateOnNextTurn = (function () {
+        return env === "CommonJS" ? function (f, v) {
+                process.nextTick(function () { f(v); });
+            } :
+            function (f, v) { root.setTimeout(function () { f(v); }, 0); };
+    }());
 
     // Expose as a module or global depending on the detected environment
     switch (env) {
     case "CommonJS":
-        createModule(evaluateOnNextTurn, exports);
+        createModule(_, exports);
         break;
 
     case "AMD":
-        define(["exports"], function (exports) {
-            return createModule(evaluateOnNextTurn, exports);
-        });
+        define(["exports"], function (exports) { return createModule(_, exports); });
         break;
 
     case "browser":
-        root.tillthen = createModule(evaluateOnNextTurn, {});
+        root.tillthen = createModule(_, {});
 
         // When running in a browser (without AMD modules), attach a `noConflict` onto the
         //  `tillthen` global
@@ -74,23 +84,10 @@
             };
         }());
     }
-}(this, function (evaluateOnNextTurn, tillthen) {
+}(this, function (_, tillthen) {
     "use strict";
 
     var
-        isObject = function (o) {
-            return Object.prototype.toString.call(o) === "[object Object]";
-        },
-
-        isFunction = function (f) {
-            return Object.prototype.toString.call(f) === "[object Function]";
-        },
-
-        extend = function (target, source) {
-            for (var x in source) { if (source.hasOwnProperty(x)) { target[x] = source[x]; } }
-            return target;
-        },
-
         // Tillthen deferred constructor
         TillthenDeferred = function () {},
 
@@ -122,7 +119,7 @@
             //  ensuring consistency in the face of an accessor property, whose value could change
             //  between retrievals)
             try {
-                if (!(isObject(x) || isFunction(x)) || !isFunction(xThen = x.then)) {
+                if (!(_.isObject(x) || _.isFunction(x)) || !_.isFunction(xThen = x.then)) {
                     return deferred.fulfill(x);
                 }
             }
@@ -175,12 +172,12 @@
 
                     // If given `onFulfilled` is not a function then use a pass-through function in
                     //  its place
-                    isFunction(onFulfilled) || (onFulfilled = function (value) { return value; });
+                    _.isFunction(onFulfilled) || (onFulfilled = function (value) { return value; });
 
                     // Create an evaluator to do the dirty work and either run it 'now' if the
                     //  promise is already fulfilled or as soon as (and if) that eventually happens
                     var evaluator = createEvaluator(onFulfilled, dependantDeferred);
-                    state === "fulfilled" ? evaluateOnNextTurn(evaluator, result) :
+                    state === "fulfilled" ? _.evaluateOnNextTurn(evaluator, result) :
                         fulfillQueue.push(evaluator);
                 },
 
@@ -194,12 +191,12 @@
 
                     // If given `onRejected` is not a function then use a pass-through function in
                     //  its place
-                    isFunction(onRejected) || (onRejected = function (error) { throw error; });
+                    _.isFunction(onRejected) || (onRejected = function (error) { throw error; });
 
                     // Create an evaluator to do the dirty work and either run it 'now' if the
                     //  promise is already rejected or as soon as (and if) that eventually happens
                     var evaluator = createEvaluator(onRejected, dependantDeferred);
-                    state === "rejected" ? evaluateOnNextTurn(evaluator, result) :
+                    state === "rejected" ? _.evaluateOnNextTurn(evaluator, result) :
                         rejectQueue.push(evaluator);
                 },
 
@@ -239,7 +236,7 @@
                 };
 
             // Attach `then`, `getState` and `getResult` methods to the promise:
-            extend(promise, {
+            _.extend(promise, {
 
                 // Access the promise's current or eventual fulfillment value or rejection reason.
                 //  As soon as (if ever) the promise is fulfilled, the `onFulfilled` handler will
@@ -273,7 +270,7 @@
 
             // Derive a deferred from the promise and return it
             TillthenDeferred.prototype = promise;
-            return extend(new TillthenDeferred(), {
+            return _.extend(new TillthenDeferred(), {
                 promise: promise,
                 fulfill: fulfill,
                 reject: reject,
@@ -282,7 +279,7 @@
         };
 
     // Attach the `defer` / `getVersion` methods to Tillthen and return it
-    return extend(tillthen, {
+    return _.extend(tillthen, {
 
         // Get a deferred object: A pending promise with `resolve`, `fulfill` and `reject` methods
         defer: createDeferred,
