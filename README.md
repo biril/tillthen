@@ -76,12 +76,12 @@ promise if `result` is a _value_, or cause it to assume `result`'s (future) stat
 _promise_ itself. `defer.reject(reason)` will reject the promise with given `reason`.
 
 `deferred.promise` exposes the deferred's underlying
-[promise](https://github.com/promises-aplus/promises-spec). Besides the `then` method, this features
-a `getState` method (to get the promise's current state) and a `getResult` method (to get the
-promise's eventual fulfillment value or rejection reason).
+[promise](https://github.com/promises-aplus/promises-spec). Besides the `then` method, it features
+a `state` property (exposing the current state) and a `result` property (exposing the eventual
+fulfillment value or rejection reason).
 
 Note that the deferred object may be used in place of the underlying promise as it also implements
-the `then` / `getState` / `getResult` API, merely delegating to the latter.
+`then` and exposes `state` and `result`.
 
 
 Testing

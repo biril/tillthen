@@ -17,11 +17,6 @@
 
             isFunction: function (f) {
                 return Object.prototype.toString.call(f) === "[object Function]";
-            },
-
-            extend: function (target, source) {
-                for (var x in source) { if (source.hasOwnProperty(x)) { target[x] = source[x]; } }
-                return target;
             }
         },
 
@@ -106,8 +101,8 @@
 
             // If `x` is a promise, adopt its (future) state
             if (x instanceof TillthenPromise) {
-                if (x.getState() === "fulfilled") { return deferred.fulfill(x.getResult()); }
-                if (x.getState() === "rejected") { return deferred.reject(x.getResult()); }
+                if (x.state === "fulfilled") { return deferred.fulfill(x.result); }
+                if (x.state === "rejected") { return deferred.reject(x.result); }
                 return x.then(deferred.fulfill, deferred.reject);
             }
 
@@ -161,6 +156,9 @@
 
                 // The actual promise. The deferred will derive from this
                 promise = new TillthenPromise(),
+
+                // The deferred to be returned
+                deferred = null,
 
                 // Queue a handler and a dependant deferred for fulfillment. When (and if) the
                 //  promise is fulfilled, the handler will be evaluated on promise's value and the
@@ -235,8 +233,8 @@
                     return promise;
                 };
 
-            // Attach `then`, `getState` and `getResult` methods to the promise:
-            _.extend(promise, {
+            // Attach `then` method as well as `state` and `result` getters to the promise:
+            Object.defineProperties(promise, {
 
                 // Access the promise's current or eventual fulfillment value or rejection reason.
                 //  As soon as (if ever) the promise is fulfilled, the `onFulfilled` handler will
@@ -244,49 +242,60 @@
                 //  the promise is rejected, the `onRejected` handler will be evaluated on the
                 //  rejection reason. Returns a new promise which will be eventually resolved
                 //  with the value / reason / promise returned by `onFulfilled` or `onRejected`
-                then: function (onFulfilled, onRejected) {
+                then: {
+                    value: function (onFulfilled, onRejected) {
+                        // Create a new deferred, one which is *dependant* on (and will be resolved
+                        //  with) the the value / reason / promise returned by `onFulfilled` or
+                        //  `onRejected`
+                        var dependantDeferred = createDeferred();
 
-                    // Create a new deferred, one which is *dependant* on (and will be resolved
-                    //  with) the the value / reason / promise returned by `onFulfilled` or
-                    //  `onRejected`
-                    var dependantDeferred = createDeferred();
+                        // Queue `onFulfilled` and `onRejected` for evaluation upon the promise's
+                        //  eventual fulfillment or rejection
+                        queueForFulfillment(onFulfilled, dependantDeferred);
+                        queueForRejection(onRejected, dependantDeferred);
 
-                    // Queue `onFulfilled` and `onRejected` for evaluation upon the promise's
-                    //  eventual fulfillment or rejection
-                    queueForFulfillment(onFulfilled, dependantDeferred);
-                    queueForRejection(onRejected, dependantDeferred);
-
-                    // Return the dependant deferred's underlying promise
-                    return dependantDeferred.promise;
+                        // Return the dependant deferred's underlying promise
+                        return dependantDeferred.promise;
+                    }
                 },
 
                 // Get the promise's current state ('pending', 'fulfilled' or 'rejected')
-                getState: function () { return state; },
+                state: { get: function () { return state; } },
 
-                // Get the promise's result (value or reason). Valid on after the promise has been
-                //  either fulfilled or rejected
-                getResult: function () { return result; }
+                // Get the promise's result (value or reason). Valid only after the promise has
+                //  either been fulfilled or rejected
+                result: { get: function () { return result; } }
             });
 
-            // Derive a deferred from the promise and return it
+            // Derive a deferred from the promise, attach needed methods and return it
             TillthenDeferred.prototype = promise;
-            return _.extend(new TillthenDeferred(), {
-                promise: promise,
-                fulfill: fulfill,
-                reject: reject,
-                resolve: function (valueOrPromise) { resolveDeferred(this, valueOrPromise); }
+            deferred = new TillthenDeferred();
+            Object.defineProperties(deferred, {
+
+                // Get the deferred's underlying promise
+                promise: { get: function () { return promise; } },
+
+                // Fulfill the promise with given value
+                fulfill: { value: fulfill },
+
+                // Reject the promise with given reason
+                reject: { value: reject },
+
+                // Resolve the promise with given `result`: Fulfill it if `result` is a _value_, or
+                //  cause it to assume `result`'s (future) state if it's a _promise_ itself
+                resolve: { value: function (result) { resolveDeferred(this, result); } }
             });
+            return deferred;
         };
 
     // Attach the `defer` / `getVersion` methods to Tillthen and return it
-    return _.extend(tillthen, {
+    Object.defineProperties(tillthen, {
 
         // Get a deferred object: A pending promise with `resolve`, `fulfill` and `reject` methods
-        defer: createDeferred,
+        defer: { value: createDeferred },
 
         // Get current version of Tillthen
-        getVersion: function () {
-            return "0.2.1"; // Keep in sync with package.json
-        }
+        version: { get: function () { return "0.2.1"; } }
     });
+    return tillthen;
 }));

@@ -11,5 +11,6 @@
     "onevar":true,    // Allows only one var statement per function
     "smarttabs":true, // Suppresses warnings about mixed tabs and spaces when the latter are used for alignmnent only
     "noarg":true,     // Prohibits the use of arguments.caller and arguments.callee
-    "expr":true       // Suppresses warnings about the use of expressions in place of assignments or function calls.
+    "expr":true,      // Suppresses warnings about the use of expressions in place of assignments or function calls.
+    "es5":true        // ES5
 }
