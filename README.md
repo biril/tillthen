@@ -17,7 +17,7 @@ Set up
 ------
 
 Tillthen may be used in the browser through a plain `<script>`-tag, with an AMD module loader,
-or as a CommonJS module on Node. It will be automatically exposed in the correct format depending
+or as a CommonJS module on Node. It will be automatically exported in the correct format depending
 on the detected environment. To get it, `git clone git://github.com/biril/tillthen` or
 `npm install tillthen`.
 
@@ -71,15 +71,17 @@ readFile("foo.txt", "utf-8", function (error, text) {
 return deferred.promise;
 ```
 
-`deferred.promise` exposes the deferred's underlying
-[promise](https://github.com/promises-aplus/promises-spec) which features nothing more than a
-`then` method.
-
 `defer.resolve(result)` will resolve the promise with given `result`. Thus, it will fulfill the
 promise if `result` is a _value_, or cause it to assume `result`'s (future) state if it's a
-_promise_ itself. `defer.reject(reason)` will reject the promise with given `reason`. 
+_promise_ itself. `defer.reject(reason)` will reject the promise with given `reason`.
 
-Note that the deffered is itself a promise and as such also features a `then` method.
+`deferred.promise` exposes the deferred's underlying
+[promise](https://github.com/promises-aplus/promises-spec). Besides the `then` method, this features
+a `getState` method (to get the promise's current state) and a `getResult` method (to get the
+promise's eventual fulfillment value or rejection reason).
+
+Note that the deferred object may be used in place of the underlying promise as it also implements
+the `then` / `getState` / `getResult` API, merely delegating to the latter.
 
 
 Testing
