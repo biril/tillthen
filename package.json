@@ -1,6 +1,6 @@
 {
   "name": "tillthen",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "biril <alexlambiris@gmail.com>",
   "description": "A minimal implementation of Promises/A+",
   "contributors": [],
