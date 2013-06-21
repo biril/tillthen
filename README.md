@@ -2,7 +2,7 @@ Tillthen
 ========
 
 [![Build Status](https://travis-ci.org/biril/tillthen.png)](https://travis-ci.org/biril/tillthen)
-[![NPM version](https://badge.fury.io/js/backbone-faux-server.png)](http://badge.fury.io/js/tillthen)
+[![NPM version](https://badge.fury.io/js/tillthen.png)](http://badge.fury.io/js/tillthen)
 
 A minimal implementation of [Promises/A+](https://github.com/promises-aplus/promises-spec) tested
 on [Promises/A+ Compliance Test Suite](https://github.com/promises-aplus/promises-tests). 
