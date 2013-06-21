@@ -1,7 +1,8 @@
-Tillthen v0.3.1
-===============
+Tillthen
+========
 
 [![Build Status](https://travis-ci.org/biril/tillthen.png)](https://travis-ci.org/biril/tillthen)
+[![NPM version](https://badge.fury.io/js/backbone-faux-server.png)](http://badge.fury.io/js/tillthen)
 
 A minimal implementation of [Promises/A+](https://github.com/promises-aplus/promises-spec) tested
 on [Promises/A+ Compliance Test Suite](https://github.com/promises-aplus/promises-tests). 
@@ -72,13 +73,13 @@ return deferred.promise;
 ```
 
 `defer.resolve(result)` will resolve the promise with given `result`. Thus, it will fulfill the
-promise if `result` is a _value_, or cause it to assume `result`'s (future) state if it's a
-_promise_ itself. `defer.reject(reason)` will reject the promise with given `reason`.
+promise if `result` is a *value*, or cause it to assume `result`'s (future) state if it's a
+*promise* itself. `defer.reject(reason)` will reject the promise with given `reason`.
 
 `deferred.promise` exposes the deferred's underlying
 [promise](https://github.com/promises-aplus/promises-spec). Besides the `then` method, it features
-a `state` property (exposing the current state) and a `result` property (exposing the eventual
-fulfillment value or rejection reason).
+a `state` property exposing the current state, and a `result` property exposing the eventual
+fulfillment value or rejection reason.
 
 Note that the deferred object may be used in place of the underlying promise as it also implements
 `then` and exposes `state` and `result`.
