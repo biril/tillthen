@@ -27,7 +27,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <pre><code>Tillthen v0.3.2
+              <pre><code>Tillthen v0.3.4
 
 https://github.com/biril/tillthen
 Licensed and freely distributed under the MIT License
@@ -89,12 +89,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>A global <code>exports</code> object signifies CommonJS-like enviroments that support
- <code>module.exports</code>, e.g. Node</p>
+              <p>A global <code>define</code> method with an <code>amd</code> property signifies the presence of an AMD
+ loader (require.js, curl.js)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (_.isObject(exports)) { <span class="keyword">return</span> <span class="string">"CommonJS"</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">"function"</span> &amp;&amp; define.amd) { <span class="keyword">return</span> <span class="string">"AMD"</span>; }</pre></div></div>
             
         </li>
         
@@ -105,12 +105,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>A global <code>define</code> method with an <code>amd</code> property signifies the presence of an AMD
- loader (require.js, curl.js)</p>
+              <p>A global <code>exports</code> object signifies CommonJS-like enviroments that support
+ <code>module.exports</code>, e.g. Node</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (_.isObject(define) &amp;&amp; define.amd) { <span class="keyword">return</span> <span class="string">"AMD"</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> exports !== <span class="string">"undefined"</span> &amp;&amp; _.isObject(exports)) { <span class="keyword">return</span> <span class="string">"CommonJS"</span>; }</pre></div></div>
             
         </li>
         
@@ -965,7 +965,7 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        version: { get: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="string">"0.3.2"</span>; } }
+            <div class="content"><div class='highlight'><pre>        version: { get: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="string">"0.3.4"</span>; } }
     });
     <span class="keyword">return</span> tillthen;
 }));</pre></div></div>
