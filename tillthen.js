@@ -23,13 +23,13 @@
         // Detect the current environment (can be CommonJS, AMD or browser). Tillthen will be
         //  exposed as a module or global depending on that
         env = (function () {
-            // A global `exports` object signifies CommonJS-like enviroments that support
-            //  `module.exports`, e.g. Node
-            if (_.isObject(exports)) { return "CommonJS"; }
-
             // A global `define` method with an `amd` property signifies the presence of an AMD
             //  loader (require.js, curl.js)
-            if (_.isObject(define) && define.amd) { return "AMD"; }
+            if (typeof define === "function" && define.amd) { return "AMD"; }
+
+            // A global `exports` object signifies CommonJS-like enviroments that support
+            //  `module.exports`, e.g. Node
+            if (typeof exports !== "undefined" && _.isObject(exports)) { return "CommonJS"; }
 
             // If none of the above, then assume a browser, without AMD
             return "browser";
