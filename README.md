@@ -5,7 +5,7 @@ Tillthen
 [![NPM version](https://badge.fury.io/js/tillthen.png)](http://badge.fury.io/js/tillthen)
 
 A minimal implementation of [Promises/A+](https://github.com/promises-aplus/promises-spec) tested
-on [Promises/A+ Compliance Test Suite](https://github.com/promises-aplus/promises-tests). 
+on [Promises/A+ Compliance Test Suite](https://github.com/promises-aplus/promises-tests).
 
 Tillthen is useful as a consise, easy-to-digest implementation of the spec. The source (excluding
 the UMD boilerplate which deals with exporting the module) is in the 100-line ballpark and an
@@ -91,13 +91,6 @@ Testing
 Tillthen is tested on
 [Promises/A+ Compliance Test Suite](https://github.com/promises-aplus/promises-tests). To run it,
 either `make test` or `npm test` (after `npm install`ing).
-
-
-Caveats / WTF
--------------
-
-* Uses ES5 syntax, namely `Object.defineProperties`, to expose immutable properties and will
-    therefore break on [non-compliant browsers](http://kangax.github.io/es5-compat-table/).
 
 
 License
