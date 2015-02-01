@@ -127,7 +127,7 @@
             catch (error) { deferred.reject(error); }
 
             // If `x` is a thenable adopt its (future) state
-            xThen(function (value) {
+            xThen.call(x, function (value) {
                 resolveDeferred(deferred, value);
             }, function (reason) {
                 deferred.reject(reason);
