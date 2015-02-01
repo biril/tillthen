@@ -42,10 +42,16 @@
     //  is in fact 'CommonJS', the presense of node's `process` object is assumed and the latter
     //  is used to get a reference to Node's `nextTick` method)
     _.evaluateOnNextTurn = (function () {
-        return env === "CommonJS" ? function (f, v) {
-                process.nextTick(function () { f(v); });
+        return env === "CommonJS" ?
+            function (f /*, arg1, .., argN */) {
+                var args = Array.prototype.slice.apply(arguments);
+                args.shift();
+                process.nextTick(function () { f.apply(null, args); });
             } :
-            function (f, v) { root.setTimeout(function () { f(v); }, 0); };
+            function (/* f, arg1, .., argN */) {
+                Array.prototype.splice.call(arguments, 1, 0, 0);
+                root.setTimeout.apply(root, arguments);
+            };
     }());
 
     // Expose as a module or global depending on the detected environment
