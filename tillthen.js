@@ -215,7 +215,9 @@
 
                     // Fulfil the promise
                     state = "fulfilled";
-                    for (var i = 0, l = fulfillQueue.length; i < l; ++i) { fulfillQueue[i](value); }
+                    _.evaluateOnNextTurn(function (fq) {
+                        for (var i = 0, l = fq.length; i < l; ++i) { fq[i](value); }
+                    }, fulfillQueue);
                     fulfillQueue = [];
                     result = value;
 
@@ -232,7 +234,9 @@
 
                     // Reject the promise
                     state = "rejected";
-                    for (var i = 0, l = rejectQueue.length; i < l; ++i) { rejectQueue[i](reason); }
+                    _.evaluateOnNextTurn(function (rq) {
+                        for (var i = 0, l = rq.length; i < l; ++i) { rq[i](reason); }
+                    }, rejectQueue);
                     rejectQueue = [];
                     result = reason;
 
