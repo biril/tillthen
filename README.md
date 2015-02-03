@@ -98,4 +98,4 @@ License
 
 Licensed and freely distributed under the MIT License (LICENSE.txt).
 
-Copyright (c) 2013 Alex Lambiris
+Copyright (c) 2013-2015 Alex Lambiris

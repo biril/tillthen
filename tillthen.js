@@ -2,7 +2,7 @@
 
 //     https://github.com/biril/tillthen
 //     Licensed and freely distributed under the MIT License
-//     Copyright (c) 2013 Alex Lambiris
+//     Copyright (c) 2013-2015 Alex Lambiris
 
 /*global exports, define, process */
 (function (root, createModule) {
