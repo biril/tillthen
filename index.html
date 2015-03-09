@@ -27,19 +27,9 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <pre><code>Tillthen v0.3.4
-
-https://github.com/biril/tillthen
-Licensed and freely distributed under the MIT License
-Copyright (c) 2013 Alex Lambiris</code></pre>
-
+              <pre><code>Tillthen v0<span class="hljs-number">.3</span><span class="hljs-number">.5</span>
+</code></pre>
             </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="comment">/*global exports, define, process */</span>
-(<span class="function"><span class="keyword">function</span> <span class="params">(root, createModule)</span> {</span>
-    <span class="string">"use strict"</span>;
-
-    <span class="keyword">var</span></pre></div></div>
             
         </li>
         
@@ -50,19 +40,18 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Package various utility functions we&#39;ll be reusing</p>
-
+              <pre><code>https:<span class="hljs-comment">//github.com/biril/tillthen</span>
+Licensed and freely distributed under the MIT License
+Copyright (c) <span class="hljs-number">2013</span>-<span class="hljs-number">2015</span> Alex Lambiris
+</code></pre>
             </div>
             
-            <div class="content"><div class='highlight'><pre>        _ = {
-            isObject: <span class="function"><span class="keyword">function</span> <span class="params">(o)</span> {</span>
-                <span class="keyword">return</span> Object.prototype.toString.call(o) === <span class="string">"[object Object]"</span>;
-            },
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-comment">/*global exports, define, process */</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(root, createModule)</span> </span>{
+<span class="hljs-pi">    "use strict"</span>;
 
-            isFunction: <span class="function"><span class="keyword">function</span> <span class="params">(f)</span> {</span>
-                <span class="keyword">return</span> Object.prototype.toString.call(f) === <span class="string">"[object Function]"</span>;
-            }
-        },</pre></div></div>
+    <span class="hljs-keyword">var</span></pre></div></div>
             
         </li>
         
@@ -73,12 +62,19 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Detect the current environment (can be CommonJS, AMD or browser). Tillthen will be
- exposed as a module or global depending on that</p>
+              <p>Package various utility functions we’ll be reusing</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        env = (<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>        _ = {
+            isObject: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(o)</span> </span>{
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(o) === <span class="hljs-string">"[object Object]"</span>;
+            },
+
+            isFunction: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(f)</span> </span>{
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(f) === <span class="hljs-string">"[object Function]"</span>;
+            }
+        },</pre></div></div>
             
         </li>
         
@@ -89,12 +85,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>A global <code>define</code> method with an <code>amd</code> property signifies the presence of an AMD
- loader (require.js, curl.js)</p>
+              <p>Detect the current environment (can be CommonJS, AMD or browser). Tillthen will be
+ exposed as a module or global depending on that</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">"function"</span> &amp;&amp; define.amd) { <span class="keyword">return</span> <span class="string">"AMD"</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        env = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -105,12 +101,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>A global <code>exports</code> object signifies CommonJS-like enviroments that support
- <code>module.exports</code>, e.g. Node</p>
+              <p>A global <code>define</code> method with an <code>amd</code> property signifies the presence of an AMD
+ loader (require.js, curl.js)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> exports !== <span class="string">"undefined"</span> &amp;&amp; _.isObject(exports)) { <span class="keyword">return</span> <span class="string">"CommonJS"</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> define === <span class="hljs-string">"function"</span> &amp;&amp; define.amd) { <span class="hljs-keyword">return</span> <span class="hljs-string">"AMD"</span>; }</pre></div></div>
             
         </li>
         
@@ -121,12 +117,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>If none of the above, then assume a browser, without AMD</p>
+              <p>A global <code>exports</code> object signifies CommonJS-like enviroments that support
+ <code>module.exports</code>, e.g. Node</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">return</span> <span class="string">"browser"</span>;
-        }());</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> exports !== <span class="hljs-string">"undefined"</span> &amp;&amp; _.isObject(exports)) { <span class="hljs-keyword">return</span> <span class="hljs-string">"CommonJS"</span>; }</pre></div></div>
             
         </li>
         
@@ -137,20 +133,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>Create a next-turn-evaluation function: A function that evaluates given function <code>f</code> on
- given value <code>v</code>, <em>soon</em>, i.e. <em>not</em> in the same turn of the event loop</p>
-<p>(Note that support for CommonJS will be specific to node. So if the detected environment
- is in fact &#39;CommonJS&#39;, the presense of node&#39;s <code>process</code> object is assumed and the latter
- is used to get a reference to Node&#39;s <code>nextTick</code> method)</p>
+              <p>If none of the above, then assume a browser, without AMD</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    _.evaluateOnNextTurn = (<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-        <span class="keyword">return</span> env === <span class="string">"CommonJS"</span> ? <span class="function"><span class="keyword">function</span> <span class="params">(f, v)</span> {</span>
-                process.nextTick(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> f(v); });
-            } :
-            <span class="function"><span class="keyword">function</span> <span class="params">(f, v)</span> {</span> root.setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> f(v); }, <span class="number">0</span>); };
-    }());</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">return</span> <span class="hljs-string">"browser"</span>;
+        }());</pre></div></div>
             
         </li>
         
@@ -161,21 +149,26 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>Expose as a module or global depending on the detected environment</p>
+              <p>Create a next-turn-evaluation function: A function that evaluates given function <code>f</code> on
+ given value <code>v</code>, <em>soon</em>, i.e. <em>not</em> in the same turn of the event loop</p>
+<p>(Note that support for CommonJS will be specific to node. So if the detected environment
+ is in fact ‘CommonJS’, the presense of node’s <code>process</code> object is assumed and the latter
+ is used to get a reference to Node’s <code>nextTick</code> method)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">switch</span> (env) {
-    <span class="keyword">case</span> <span class="string">"CommonJS"</span>:
-        createModule(_, exports);
-        <span class="keyword">break</span>;
-
-    <span class="keyword">case</span> <span class="string">"AMD"</span>:
-        define([<span class="string">"exports"</span>], <span class="function"><span class="keyword">function</span> <span class="params">(exports)</span> {</span> <span class="keyword">return</span> createModule(_, exports); });
-        <span class="keyword">break</span>;
-
-    <span class="keyword">case</span> <span class="string">"browser"</span>:
-        root.tillthen = createModule(_, {});</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    _.evaluateOnNextTurn = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> env === <span class="hljs-string">"CommonJS"</span> ?
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(f <span class="hljs-comment">/*, arg1, .., argN */</span>)</span> </span>{
+                <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">Array</span>.prototype.slice.apply(<span class="hljs-built_in">arguments</span>);
+                args.shift();
+                process.nextTick(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ f.apply(<span class="hljs-literal">null</span>, args); });
+            } :
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* f, arg1, .., argN */</span>)</span> </span>{
+                <span class="hljs-built_in">Array</span>.prototype.splice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+                root.setTimeout.apply(root, <span class="hljs-built_in">arguments</span>);
+            };
+    }());</pre></div></div>
             
         </li>
         
@@ -186,12 +179,21 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>When running in a browser (without AMD modules), attach a <code>noConflict</code> onto the
- <code>tillthen</code> global</p>
+              <p>Expose as a module or global depending on the detected environment</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        root.tillthen.noConflict = (<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">switch</span> (env) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"CommonJS"</span>:
+        createModule(_, exports);
+        <span class="hljs-keyword">break</span>;
+
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"AMD"</span>:
+        define([<span class="hljs-string">"exports"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(exports)</span> </span>{ <span class="hljs-keyword">return</span> createModule(_, exports); });
+        <span class="hljs-keyword">break</span>;
+
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"browser"</span>:
+        root.tillthen = createModule(_, {});</pre></div></div>
             
         </li>
         
@@ -202,12 +204,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>Save a reference to the previous value of &#39;tillthen&#39;, so that it can be restored
- later on, if &#39;noConflict&#39; is used</p>
+              <p>When running in a browser (without AMD modules), attach a <code>noConflict</code> onto the
+ <code>tillthen</code> global</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">var</span> previousTillthen = root.tillthen;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        root.tillthen.noConflict = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -218,23 +220,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>Run in no-conflict mode, setting the <code>tillthen</code> global to to its previous value.
- Returns <code>tillthen</code></p>
+              <p>Save a reference to the previous value of ‘tillthen’, so that it can be restored
+ later on, if ‘noConflict’ is used</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-                <span class="keyword">var</span> tillthen = root.tillthen;
-                root.tillthen = previousTillthen;
-                tillthen.noConflict = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> tillthen; };
-                <span class="keyword">return</span> tillthen;
-            };
-        }());
-    }
-}(<span class="keyword">this</span>, <span class="function"><span class="keyword">function</span> <span class="params">(_, tillthen)</span> {</span>
-    <span class="string">"use strict"</span>;
-
-    <span class="keyword">var</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> previousTillthen = root.tillthen;</pre></div></div>
             
         </li>
         
@@ -245,11 +236,23 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <p>Tillthen deferred constructor</p>
+              <p>Run in no-conflict mode, setting the <code>tillthen</code> global to to its previous value.
+ Returns <code>tillthen</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        TillthenDeferred = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>},</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">var</span> tillthen = root.tillthen;
+                root.tillthen = previousTillthen;
+                tillthen.noConflict = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> tillthen; };
+                <span class="hljs-keyword">return</span> tillthen;
+            };
+        }());
+    }
+}(<span class="hljs-keyword">this</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(_, tillthen)</span> </span>{
+<span class="hljs-pi">    "use strict"</span>;
+
+    <span class="hljs-keyword">var</span></pre></div></div>
             
         </li>
         
@@ -260,11 +263,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>Tillthen promise constructor</p>
+              <p>Tillthen deferred constructor</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        TillthenPromise = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>},</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        TillthenDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{},</pre></div></div>
             
         </li>
         
@@ -275,12 +278,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>Resolve <code>deferred</code>, i.e. transition it to an appropriate state depending on given <code>x</code></p>
+              <p>Tillthen promise constructor</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        resolveDeferred = <span class="function"><span class="keyword">function</span> <span class="params">(deferred, x)</span> {</span>
-            <span class="keyword">var</span> xThen = <span class="literal">null</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        TillthenPromise = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{},</pre></div></div>
             
         </li>
         
@@ -291,14 +293,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>If <code>promise</code> and <code>x</code> refer to the same object, reject promise with a TypeError as
- the reason</p>
+              <p>Resolve <code>deferred</code>, i.e. transition it to an appropriate state depending on given <code>x</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (deferred.promise === x) {
-                <span class="keyword">return</span> deferred.reject(<span class="keyword">new</span> TypeError(<span class="string">"Cannot resolve a promise with itself"</span>));
-            }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        resolveDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(deferred, x)</span> </span>{
+            <span class="hljs-keyword">var</span> xThen = <span class="hljs-literal">null</span>;</pre></div></div>
             
         </li>
         
@@ -309,14 +309,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
-              <p>If <code>x</code> is a promise, adopt its (future) state</p>
+              <p>If <code>promise</code> and <code>x</code> refer to the same object, reject promise with a TypeError as
+ the reason</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (x <span class="keyword">instanceof</span> TillthenPromise) {
-                <span class="keyword">if</span> (x.state === <span class="string">"fulfilled"</span>) { <span class="keyword">return</span> deferred.fulfill(x.result); }
-                <span class="keyword">if</span> (x.state === <span class="string">"rejected"</span>) { <span class="keyword">return</span> deferred.reject(x.result); }
-                <span class="keyword">return</span> x.then(deferred.fulfill, deferred.reject);
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (deferred.promise === x) {
+                <span class="hljs-keyword">return</span> deferred.reject(<span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">"Cannot resolve a promise with itself"</span>));
             }</pre></div></div>
             
         </li>
@@ -328,21 +327,15 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p>if <code>x</code> is <em>not</em> a thenable, fulfill promise with <code>x</code>. If attempting to query <code>then</code>
- throws an error, reject promise with that error as the reason</p>
-<p>(The procedure of first storing a reference to <code>x.then</code>, then testing that reference,
- and then calling that reference, avoids multiple accesses to the <code>x.then</code> property
- ensuring consistency in the face of an accessor property, whose value could change
- between retrievals)</p>
+              <p>If <code>x</code> is a promise, adopt its (future) state</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">try</span> {
-                <span class="keyword">if</span> (!(_.isObject(x) || _.isFunction(x)) || !_.isFunction(xThen = x.then)) {
-                    <span class="keyword">return</span> deferred.fulfill(x);
-                }
-            }
-            <span class="keyword">catch</span> (error) { deferred.reject(error); }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (x <span class="hljs-keyword">instanceof</span> TillthenPromise) {
+                <span class="hljs-keyword">if</span> (x.state === <span class="hljs-string">"fulfilled"</span>) { <span class="hljs-keyword">return</span> deferred.fulfill(x.result); }
+                <span class="hljs-keyword">if</span> (x.state === <span class="hljs-string">"rejected"</span>) { <span class="hljs-keyword">return</span> deferred.reject(x.result); }
+                <span class="hljs-keyword">return</span> x.then(deferred.fulfill, deferred.reject);
+            }</pre></div></div>
             
         </li>
         
@@ -353,16 +346,21 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <p>If <code>x</code> is a thenable adopt its (future) state</p>
+              <p>if <code>x</code> is <em>not</em> a thenable, fulfill promise with <code>x</code>. If attempting to query <code>then</code>
+ throws an error, reject promise with that error as the reason</p>
+<p>(The procedure of first storing a reference to <code>x.then</code>, then testing that reference,
+ and then calling that reference, avoids multiple accesses to the <code>x.then</code> property
+ ensuring consistency in the face of an accessor property, whose value could change
+ between retrievals)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            xThen(<span class="function"><span class="keyword">function</span> <span class="params">(value)</span> {</span>
-                resolveDeferred(deferred, value);
-            }, <span class="function"><span class="keyword">function</span> <span class="params">(reason)</span> {</span>
-                deferred.reject(reason);
-            });
-        },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">try</span> {
+                <span class="hljs-keyword">if</span> (!(_.isObject(x) || _.isFunction(x)) || !_.isFunction(xThen = x.then)) {
+                    <span class="hljs-keyword">return</span> deferred.fulfill(x);
+                }
+            }
+            <span class="hljs-keyword">catch</span> (error) { deferred.reject(error); }</pre></div></div>
             
         </li>
         
@@ -373,17 +371,15 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
-              <p>Create an evaluator for given <code>onResulted</code> function and <code>deferred</code> object. When invoked
- with a <code>result</code> (value or reason), the evaluator will evaluate <code>onResulted(result)</code>
- and will use the returned value to resolve <code>deferred</code></p>
+              <p>If <code>x</code> is a thenable adopt its (future) state</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        createEvaluator = <span class="function"><span class="keyword">function</span> <span class="params">(onResulted, deferred)</span> {</span>
-            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="params">(result)</span> {</span>
-                <span class="keyword">try</span> { resolveDeferred(deferred, onResulted(result)); }
-                <span class="keyword">catch</span> (reason) { deferred.reject(reason); }
-            };
+            <div class="content"><div class='highlight'><pre>            xThen.call(x, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
+                resolveDeferred(deferred, value);
+            }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(reason)</span> </span>{
+                deferred.reject(reason);
+            });
         },</pre></div></div>
             
         </li>
@@ -395,13 +391,18 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
-              <p>Create a deferred object: A pending promise with <code>resolve</code>, <code>fulfill</code> and <code>reject</code>
- methods</p>
+              <p>Create an evaluator for given <code>onResulted</code> function and <code>deferred</code> object. When invoked
+ with a <code>result</code> (value or reason), the evaluator will evaluate <code>onResulted(result)</code>
+ and will use the returned value to resolve <code>deferred</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        createDeferred = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-            <span class="keyword">var</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>        createEvaluator = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(onResulted, deferred)</span> </span>{
+            <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(result)</span> </span>{
+                <span class="hljs-keyword">try</span> { resolveDeferred(deferred, onResulted(result)); }
+                <span class="hljs-keyword">catch</span> (reason) { deferred.reject(reason); }
+            };
+        },</pre></div></div>
             
         </li>
         
@@ -412,11 +413,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
-              <p>Promise&#39;s current state</p>
+              <p>Create a deferred object: A pending promise with <code>resolve</code>, <code>fulfill</code> and <code>reject</code>
+ methods</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                state = <span class="string">"pending"</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        createDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">var</span></pre></div></div>
             
         </li>
         
@@ -426,6 +429,21 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Promise’s current state</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                state = <span class="hljs-string">"pending"</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Value of fulfillment or reason of rejection. Will be set when fulfillment or
  rejection actually occurs</p>
@@ -437,34 +455,19 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
         </li>
         
         
-        <li id="section-23">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
-              </div>
-              <p>Queues of fulfillment / rejection handlers. Handlers are added whenever the
- promise&#39;s <code>then</code> method is invoked</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                fulfillQueue = [],
-                rejectQueue = [],</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
-              <p>The actual promise. The deferred will derive from this</p>
+              <p>Queues of fulfillment / rejection handlers. Handlers are added whenever the
+ promise’s <code>then</code> method is invoked</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                promise = <span class="keyword">new</span> TillthenPromise(),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                fulfillQueue = [],
+                rejectQueue = [],</pre></div></div>
             
         </li>
         
@@ -475,11 +478,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
-              <p>The deferred to be returned</p>
+              <p>The actual promise. The deferred will derive from this</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                deferred = <span class="literal">null</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                promise = <span class="hljs-keyword">new</span> TillthenPromise(),</pre></div></div>
             
         </li>
         
@@ -490,13 +493,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
-              <p>Queue a handler and a dependant deferred for fulfillment. When (and if) the
- promise is fulfilled, the handler will be evaluated on promise&#39;s value and the
- result will be used to resolve the dependant deferred</p>
+              <p>The deferred to be returned</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                queueForFulfillment = <span class="function"><span class="keyword">function</span> <span class="params">(onFulfilled, dependantDeferred)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>                deferred = <span class="hljs-literal">null</span>,</pre></div></div>
             
         </li>
         
@@ -507,11 +508,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
-              <p>If the promise is already rejected, there&#39;s nothing to be done</p>
+              <p>Queue a handler and a dependant deferred for fulfillment. When (and if) the
+ promise is fulfilled, the handler will be evaluated on promise’s value and the
+ result will be used to resolve the dependant deferred</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="keyword">if</span> (state === <span class="string">"rejected"</span>) { <span class="keyword">return</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                queueForFulfillment = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(onFulfilled, dependantDeferred)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -522,12 +525,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
-              <p>If given <code>onFulfilled</code> is not a function then use a pass-through function in
- its place</p>
+              <p>If the promise is already rejected, there’s nothing to be done</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    _.isFunction(onFulfilled) || (onFulfilled = <span class="function"><span class="keyword">function</span> <span class="params">(value)</span> {</span> <span class="keyword">return</span> value; });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (state === <span class="hljs-string">"rejected"</span>) { <span class="hljs-keyword">return</span>; }</pre></div></div>
             
         </li>
         
@@ -538,15 +540,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
-              <p>Create an evaluator to do the dirty work and either run it &#39;now&#39; if the
- promise is already fulfilled or as soon as (and if) that eventually happens</p>
+              <p>If given <code>onFulfilled</code> is not a function then use a pass-through function in
+ its place</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="keyword">var</span> evaluator = createEvaluator(onFulfilled, dependantDeferred);
-                    state === <span class="string">"fulfilled"</span> ? _.evaluateOnNextTurn(evaluator, result) :
-                        fulfillQueue.push(evaluator);
-                },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    _.isFunction(onFulfilled) || (onFulfilled = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{ <span class="hljs-keyword">return</span> value; });</pre></div></div>
             
         </li>
         
@@ -557,13 +556,15 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
-              <p>Queue a handler and a dependant deferred for rejection. When (and if) the promise
- is rejected, the handler will be evaluated on promise&#39;s reason and the result
- will be used to resolve the dependant deferred</p>
+              <p>Create an evaluator to do the dirty work and either run it ‘now’ if the
+ promise is already fulfilled or as soon as (and if) that eventually happens</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                queueForRejection = <span class="function"><span class="keyword">function</span> <span class="params">(onRejected, dependantDeferred)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> evaluator = createEvaluator(onFulfilled, dependantDeferred);
+                    state === <span class="hljs-string">"fulfilled"</span> ? _.evaluateOnNextTurn(evaluator, result) :
+                        fulfillQueue.push(evaluator);
+                },</pre></div></div>
             
         </li>
         
@@ -574,11 +575,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
-              <p>If the promise is already fulfilled, there&#39;s nothing to be done</p>
+              <p>Queue a handler and a dependant deferred for rejection. When (and if) the promise
+ is rejected, the handler will be evaluated on promise’s reason and the result
+ will be used to resolve the dependant deferred</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="keyword">if</span> (state === <span class="string">"fulfilled"</span>) { <span class="keyword">return</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                queueForRejection = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(onRejected, dependantDeferred)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -589,12 +592,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <p>If given <code>onRejected</code> is not a function then use a pass-through function in
- its place</p>
+              <p>If the promise is already fulfilled, there’s nothing to be done</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    _.isFunction(onRejected) || (onRejected = <span class="function"><span class="keyword">function</span> <span class="params">(error)</span> {</span> <span class="keyword">throw</span> error; });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (state === <span class="hljs-string">"fulfilled"</span>) { <span class="hljs-keyword">return</span>; }</pre></div></div>
             
         </li>
         
@@ -605,15 +607,12 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
-              <p>Create an evaluator to do the dirty work and either run it &#39;now&#39; if the
- promise is already rejected or as soon as (and if) that eventually happens</p>
+              <p>If given <code>onRejected</code> is not a function then use a pass-through function in
+ its place</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="keyword">var</span> evaluator = createEvaluator(onRejected, dependantDeferred);
-                    state === <span class="string">"rejected"</span> ? _.evaluateOnNextTurn(evaluator, result) :
-                        rejectQueue.push(evaluator);
-                },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    _.isFunction(onRejected) || (onRejected = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error)</span> </span>{ <span class="hljs-keyword">throw</span> error; });</pre></div></div>
             
         </li>
         
@@ -624,14 +623,15 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
-              <p>Fulfil the promise. Will run the queued fulfillment-handlers and resolve
- dependant promises. Note that the <code>fulfill</code> method will be exposed on the
- returned deferred <em>only</em> - not on any returned promise: not by the deferred&#39;s
- underlying promise or those returned by invoking <code>then</code></p>
+              <p>Create an evaluator to do the dirty work and either run it ‘now’ if the
+ promise is already rejected or as soon as (and if) that eventually happens</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                fulfill = <span class="function"><span class="keyword">function</span> <span class="params">(value)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> evaluator = createEvaluator(onRejected, dependantDeferred);
+                    state === <span class="hljs-string">"rejected"</span> ? _.evaluateOnNextTurn(evaluator, result) :
+                        rejectQueue.push(evaluator);
+                },</pre></div></div>
             
         </li>
         
@@ -642,11 +642,14 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
-              <p>Dont fulfill the promise unless it&#39;s currently in a pending state</p>
+              <p>Fulfil the promise. Will run the queued fulfillment-handlers and resolve
+ dependant promises. Note that the <code>fulfill</code> method will be exposed on the
+ returned deferred <em>only</em> - not on any returned promise: not by the deferred’s
+ underlying promise or those returned by invoking <code>then</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="keyword">if</span> (state !== <span class="string">"pending"</span>) { <span class="keyword">return</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                fulfill = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -657,17 +660,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
-              <p>Fulfil the promise</p>
+              <p>Dont fulfill the promise unless it’s currently in a pending state</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    state = <span class="string">"fulfilled"</span>;
-                    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = fulfillQueue.length; i &lt; l; ++i) { fulfillQueue[i](value); }
-                    fulfillQueue = [];
-                    result = value;
-
-                    <span class="keyword">return</span> promise;
-                },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (state !== <span class="hljs-string">"pending"</span>) { <span class="hljs-keyword">return</span>; }</pre></div></div>
             
         </li>
         
@@ -678,13 +675,19 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
-              <p>Reject the promise. Will run the queued rejection-handlers and resolve
- dependant promises. As with the <code>fulfill</code> method, the <code>reject</code> method will be
- exposed on the returned deferred <em>only</em> - not on any returned promise</p>
+              <p>Fulfil the promise</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                reject = <span class="function"><span class="keyword">function</span> <span class="params">(reason)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    state = <span class="hljs-string">"fulfilled"</span>;
+                    _.evaluateOnNextTurn(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fq)</span> </span>{
+                        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, l = fq.length; i &lt; l; ++i) { fq[i](value); }
+                    }, fulfillQueue);
+                    fulfillQueue = [];
+                    result = value;
+
+                    <span class="hljs-keyword">return</span> promise;
+                },</pre></div></div>
             
         </li>
         
@@ -695,11 +698,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
-              <p>Dont reject the promise unless it&#39;s currently in a pending state</p>
+              <p>Reject the promise. Will run the queued rejection-handlers and resolve
+ dependant promises. As with the <code>fulfill</code> method, the <code>reject</code> method will be
+ exposed on the returned deferred <em>only</em> - not on any returned promise</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="keyword">if</span> (state !== <span class="string">"pending"</span>) { <span class="keyword">return</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                reject = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(reason)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -710,17 +715,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
-              <p>Reject the promise</p>
+              <p>Dont reject the promise unless it’s currently in a pending state</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    state = <span class="string">"rejected"</span>;
-                    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = rejectQueue.length; i &lt; l; ++i) { rejectQueue[i](reason); }
-                    rejectQueue = [];
-                    result = reason;
-
-                    <span class="keyword">return</span> promise;
-                };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (state !== <span class="hljs-string">"pending"</span>) { <span class="hljs-keyword">return</span>; }</pre></div></div>
             
         </li>
         
@@ -731,11 +730,19 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
-              <p>Attach <code>then</code> method as well as <code>state</code> and <code>result</code> getters to the promise:</p>
+              <p>Reject the promise</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Object.defineProperties(promise, {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    state = <span class="hljs-string">"rejected"</span>;
+                    _.evaluateOnNextTurn(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rq)</span> </span>{
+                        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, l = rq.length; i &lt; l; ++i) { rq[i](reason); }
+                    }, rejectQueue);
+                    rejectQueue = [];
+                    result = reason;
+
+                    <span class="hljs-keyword">return</span> promise;
+                };</pre></div></div>
             
         </li>
         
@@ -746,17 +753,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
-              <p>Access the promise&#39;s current or eventual fulfillment value or rejection reason.
- As soon as (if ever) the promise is fulfilled, the <code>onFulfilled</code> handler will
- be evaluated on the promise&#39;s fulfillment value. Similarly, as soon as (if ever)
- the promise is rejected, the <code>onRejected</code> handler will be evaluated on the
- rejection reason. Returns a new promise which will be eventually resolved
- with the value / reason / promise returned by <code>onFulfilled</code> or <code>onRejected</code></p>
+              <p>Attach <code>then</code> method as well as <code>state</code> and <code>result</code> getters to the promise:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                then: {
-                    value: <span class="function"><span class="keyword">function</span> <span class="params">(onFulfilled, onRejected)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-built_in">Object</span>.defineProperties(promise, {</pre></div></div>
             
         </li>
         
@@ -767,13 +768,17 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
-              <p>Create a new deferred, one which is <em>dependant</em> on (and will be resolved
- with) the the value / reason / promise returned by <code>onFulfilled</code> or
- <code>onRejected</code></p>
+              <p>Access the promise’s current or eventual fulfillment value or rejection reason.
+ As soon as (if ever) the promise is fulfilled, the <code>onFulfilled</code> handler will
+ be evaluated on the promise’s fulfillment value. Similarly, as soon as (if ever)
+ the promise is rejected, the <code>onRejected</code> handler will be evaluated on the
+ rejection reason. Returns a new promise which will be eventually resolved
+ with the value / reason / promise returned by <code>onFulfilled</code> or <code>onRejected</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                        <span class="keyword">var</span> dependantDeferred = createDeferred();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                then: {
+                    value: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(onFulfilled, onRejected)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -784,13 +789,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
-              <p>Queue <code>onFulfilled</code> and <code>onRejected</code> for evaluation upon the promise&#39;s
- eventual fulfillment or rejection</p>
+              <p>Create a new deferred, one which is <em>dependant</em> on (and will be resolved
+ with) the the value / reason / promise returned by <code>onFulfilled</code> or
+ <code>onRejected</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                        queueForFulfillment(onFulfilled, dependantDeferred);
-                        queueForRejection(onRejected, dependantDeferred);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">var</span> dependantDeferred = createDeferred();</pre></div></div>
             
         </li>
         
@@ -801,13 +806,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
-              <p>Return the dependant deferred&#39;s underlying promise</p>
+              <p>Queue <code>onFulfilled</code> and <code>onRejected</code> for evaluation upon the promise’s
+ eventual fulfillment or rejection</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                        <span class="keyword">return</span> dependantDeferred.promise;
-                    }
-                },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                        queueForFulfillment(onFulfilled, dependantDeferred);
+                        queueForRejection(onRejected, dependantDeferred);</pre></div></div>
             
         </li>
         
@@ -818,11 +823,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
-              <p>Get the promise&#39;s current state (&#39;pending&#39;, &#39;fulfilled&#39; or &#39;rejected&#39;)</p>
+              <p>Return the dependant deferred’s underlying promise</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                state: { get: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> state; } },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">return</span> dependantDeferred.promise;
+                    }
+                },</pre></div></div>
             
         </li>
         
@@ -833,13 +840,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
-              <p>Get the promise&#39;s result (value or reason). Valid only after the promise has
- either been fulfilled or rejected</p>
+              <p>Get the promise’s current state (‘pending’, ‘fulfilled’ or ‘rejected’)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                result: { get: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> result; } }
-            });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                state: { get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> state; } },</pre></div></div>
             
         </li>
         
@@ -850,13 +855,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
-              <p>Derive a deferred from the promise, attach needed methods and return it</p>
+              <p>Get the promise’s result (value or reason). Valid only after the promise has
+ either been fulfilled or rejected</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            TillthenDeferred.prototype = promise;
-            deferred = <span class="keyword">new</span> TillthenDeferred();
-            Object.defineProperties(deferred, {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                result: { get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> result; } }
+            });</pre></div></div>
             
         </li>
         
@@ -867,11 +872,13 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
-              <p>Get the deferred&#39;s underlying promise</p>
+              <p>Derive a deferred from the promise, attach needed methods and return it</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                promise: { get: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> promise; } },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            TillthenDeferred.prototype = promise;
+            deferred = <span class="hljs-keyword">new</span> TillthenDeferred();
+            <span class="hljs-built_in">Object</span>.defineProperties(deferred, {</pre></div></div>
             
         </li>
         
@@ -882,11 +889,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
-              <p>Fulfill the promise with given value</p>
+              <p>Get the deferred’s underlying promise</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                fulfill: { value: fulfill },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                promise: { get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> promise; } },</pre></div></div>
             
         </li>
         
@@ -897,11 +904,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
-              <p>Reject the promise with given reason</p>
+              <p>Fulfill the promise with given value</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                reject: { value: reject },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                fulfill: { value: fulfill },</pre></div></div>
             
         </li>
         
@@ -912,15 +919,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
-              <p>Resolve the promise with given <code>result</code>: Fulfill it if <code>result</code> is a <em>value</em>, or
- cause it to assume <code>result</code>&#39;s (future) state if it&#39;s a <em>promise</em> itself</p>
+              <p>Reject the promise with given reason</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                resolve: { value: <span class="function"><span class="keyword">function</span> <span class="params">(result)</span> {</span> resolveDeferred(<span class="keyword">this</span>, result); } }
-            });
-            <span class="keyword">return</span> deferred;
-        };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                reject: { value: reject },</pre></div></div>
             
         </li>
         
@@ -931,11 +934,15 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
-              <p>Attach the <code>defer</code> / <code>getVersion</code> methods to Tillthen and return it</p>
+              <p>Resolve the promise with given <code>result</code>: Fulfill it if <code>result</code> is a <em>value</em>, or
+ cause it to assume <code>result</code>‘s (future) state if it’s a <em>promise</em> itself</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Object.defineProperties(tillthen, {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                resolve: { value: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(result)</span> </span>{ resolveDeferred(<span class="hljs-keyword">this</span>, result); } }
+            });
+            <span class="hljs-keyword">return</span> deferred;
+        };</pre></div></div>
             
         </li>
         
@@ -946,11 +953,11 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
-              <p>Get a deferred object: A pending promise with <code>resolve</code>, <code>fulfill</code> and <code>reject</code> methods</p>
+              <p>Attach the <code>defer</code> / <code>getVersion</code> methods to Tillthen and return it</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        defer: { value: createDeferred },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">Object</span>.defineProperties(tillthen, {</pre></div></div>
             
         </li>
         
@@ -961,13 +968,28 @@ Copyright (c) 2013 Alex Lambiris</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
+              <p>Get a deferred object: A pending promise with <code>resolve</code>, <code>fulfill</code> and <code>reject</code> methods</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        defer: { value: createDeferred },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-55">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-55">&#182;</a>
+              </div>
               <p>Get current version of Tillthen</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        version: { get: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="string">"0.3.4"</span>; } }
+            <div class="content"><div class='highlight'><pre>        version: { get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-string">"0.3.5"</span>; } }
     });
-    <span class="keyword">return</span> tillthen;
+    <span class="hljs-keyword">return</span> tillthen;
 }));</pre></div></div>
             
         </li>
