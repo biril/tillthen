@@ -1,4 +1,4 @@
-//     Tillthen v0.3.4
+//     Tillthen v0.3.5
 
 //     https://github.com/biril/tillthen
 //     Licensed and freely distributed under the MIT License
@@ -305,7 +305,7 @@
         defer: { value: createDeferred },
 
         // Get current version of Tillthen
-        version: { get: function () { return "0.3.4"; } }
+        version: { get: function () { return "0.3.5"; } }
     });
     return tillthen;
 }));
