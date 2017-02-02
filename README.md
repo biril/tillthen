@@ -8,14 +8,14 @@ A minimal implementation of [Promises/A+](https://github.com/promises-aplus/prom
 on [Promises/A+ Compliance Test Suite](https://github.com/promises-aplus/promises-tests).
 
 **Please note that the current implementation conforms to v1.0 of Promises/A+ as expressed by
-v1.3.2 of the test suite. Compliance with Promises/A+ v1.1 (2.x versions of the test suite) is work
-in progess.**
+v1.3.2 of the test suite. Compliance with Promises/A+ v1.1 (2.x versions of the test suite) is
+either work in progess or not happening, depending on the author's time constraints.**
 
 Tillthen is useful as a consise, easy-to-digest implementation of the spec. The source (excluding
 the UMD boilerplate which deals with exporting the module) is in the 100-line ballpark and an
 [annotated version](http://biril.github.io/tillthen/) is also maintained. Having said that,
-real-world use is not within the authors original intentions as
-[richer, tried libraries](https://github.com/kriskowal/q) already exist.
+real-world use is not within the author's original intentions as
+[richer, battle-hardened libraries](https://github.com/kriskowal/q) already exist.
 
 
 Set up
